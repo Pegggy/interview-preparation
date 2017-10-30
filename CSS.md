@@ -176,6 +176,18 @@ CSS继承是指对某元素指定样式时，该样式不仅会对该元素生�
   width: 300px;
 }
 ```
+## CSS 隐藏元素的实现
+- `opacity: 0` 透明度为0
+- `visibility: hidden;` 
+- `display: none;`
+-  `width: 0; height: 0; overflow: hidden;`
+- `position: absolute; left: 1000000px; top: 100000px; `移出可视范围
+- `transform: translate(-9999px);` 同上
+- `transform: scale(0);`
+- `z-index: -1000; ...etc`
+- `background-color: #fff;` 把背景颜色设置成 body 一样的颜色
+- `font-size: 0;` 隐藏文字
+
 
 
 
