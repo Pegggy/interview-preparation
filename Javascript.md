@@ -226,7 +226,38 @@ if(request.readyState === 4 && request.status === 200){
 attachEvent 和 datachEvent接受两个参数：事件处理程序名称和事件处理程序函数。IE事件处理程序会在全局作用域中运行，因此 this = window。
 
 ### 事件对象
-在触发DOM上
+在触发DOM上某个事件时，会产生一个 event 对象，这个对象中包含着所有与事件有关的信息。
+
+在事件处理程序内部，对象 this 的值始终指向 currentTarget 的值，而 target 则只包含事件的实际目标，如果直接将事件处理程序指定给了目标元素，则 this、currentTarget 和 target 包含相同的值。
+```html
+<body>
+  <button id="btn">button</button>
+</body>
+```
+```js
+document.body.onclick = function(e){
+    alert(e.target)
+    alert(e.currentTarget)
+    alert(this)
+}
+```
+当点击 button 触发点击事件时，this 和 currentTarget 都指向被绑定元素及 body 元素，而 target 则指向 button 元素，因为 target 是这个事件真正的目标。如果是点击 body 元素触发 click 事件，那么 target 也是 body 元素。
+
+在 IE 事件处理程序中，在使用 DOM0级添加事件处理程序时，event 对象作为 window 的一个属性存在。
+```js
+ var btn = document.getElementById('#myBtn')
+ btn.onclick = function(){
+  var event = window.event
+  alert(event.type) // 'click'
+ }
+ ```
+ 如果通过 attachEvent()添加事件处理程序，那么也存在一个 event 对象作为参数被传入事件处理程序函数中。
+ ```js
+ var btn = document.getElementById('#myBtn')
+ btn.attachEvent('onclick',function(event){
+  alert(event.type) // 'click'
+})
+```
 
 
 
