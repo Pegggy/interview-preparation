@@ -1,3 +1,5 @@
+## null 和 undefined 的区别
+
 ## 前端安全
 ### XSS：跨站脚本攻击
 将恶意代码植入到提供给其他用户使用的页面中，简单理解为JavaScript代码注入
@@ -186,7 +188,24 @@ if(request.readyState === 4 && request.status === 200){
  ## 闭包
  我的理解就是函数内部嵌套一个函数，把函数内部自定义的变量 return 出来，这样子就可以避免全局变量的污染。
  ## 原型链
- 
+ 实例化对象原型指向构造函数的 prototype 属性。而原型对象(Array.prototype)本身也是一个对象，它也存在一个指向原型的链接，形成一条原型链。当某个实例化对象需要调用某个方法的时候，会先在其内部的方法中查找，然后会原型链一级一级向上查找，一直查找到 `Object.prototype.__proto__ // null`null 为止。
+ ```js
+ var arr = [1,2,3]
+ arr.__prpto__ ===  Array.prototype // true
+ ```
+ 写出一个类 instanceof 运算符的函数。
+ ```js
+ function io(obj,fn){
+  if(obj.__proto__){
+    if(obj.__proto__ === fn.prototype){
+      return true
+    }else{
+      io(obj.__proto__,fn)
+    }
+  }
+  return false
+ }
+ ```
  ## jQuery 插件开发 / 怎么自己实现一个 jquery
  
  ## 拖曳 canvas 元素
