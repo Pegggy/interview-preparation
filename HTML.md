@@ -69,4 +69,22 @@ DOCTYPE是用来声明文档类型和DTD（document type definition，文档类�
 - JS引擎则：解析和执行javascript来实现网页的动态效果。
 最开始渲染引擎和JS引擎并没有区分的很明确，后来JS引擎越来越独立，内核就倾向于只指渲染引擎。
 
+## HTML5 新增哪些内容或 API
+- 文件声明类型：`<!DOCTYPE html>`
+- 新元素： `section,nav,aside,video,audio,progress,canvas,figcaption, figure, footer, header...`
+- input 元素新类型：url,email,date
+
+document.querySelector():根据css选择器返回第一个匹配的元素，如果没有匹配返回null
+
+document.querySelectorAll():返回的是元素数组，querySelector返回的是一个元素。如果querySelectorAll没有匹配的内容返回的是一个空数组。
+
+classList 操作元素 class ，有 add 和 remove 两个方法。
+
+## input 和 textarea 的区别
+- input 是单行文本框，`type="text"`，有value属性。
+- textarea是标签对，使用cols、rows 定义文本框大小内容写在标签对内，没有 value 属性，是多行文本框。
+```
+ <textarea name="" id="" cols="30" rows="10"></textarea>
+ <input type="text" value="">
+```
 
