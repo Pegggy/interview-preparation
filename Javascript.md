@@ -278,7 +278,76 @@ document.body.onclick = function(e){
 })
 ```
 
+## extends
+Class 可以通过`extends`关键字实现继承
+```
+class Parent{
+}
+class Child extends Parent{
 
+}
+```
+子类必须在 constructor 方法中调用 super 方法，否则新建实例的时候会报错。这是因为子类没有自己的 this 对象，而是继承自父类的 this 对象，然后对其进行加工，如果不调用 super 方法，子类就得不到 this对象。
 
+### super 关键字
+super 作为函数调用时指向父类的构造函数。ES6要求子类的构造函数必须执行一次 super() 函数。
+```
+class Parent{
+}
+class Child extends Parent{
+  constructior(){
+    super()
+  }
+}
+```
+super()虽然代表了父类的 A 构造函数，但是返回的是子类 B 的实例，即 super 内部的 this 指向 B，因此 super() 相当于`Parent.prototype.constructor.call(this)`。
 
+super 作为对象时，在普通方法中，指向父类的原型对象，在静态方法中，指向父类。
+```
+class A {
+  p(){
+    return 2
+  }
+}
+class B extends A{
+  constructor(){
+    super();
+    console.log(super.p()) // 2
+  }
+}
+let b = new B(); 
+```
+子类 B 中的 super.p() 就是讲 super 当做一个对象使用。这时，super 在普通方法之中，指向 A.prototype，所以 super.p() 指向的就是 A.prototype.p()，因此返回2。
+
+因为 super 对象指向父类的原型对象，所以定义在父类实例上的方法或属性是无法通过 super 调用的。
+```
+class A {
+  constructor(){
+    this.p = 2
+  }
+}
+class B extends A{
+  constructor(){
+    super()
+  }
+  get p(){
+    return super.p
+  }
+}
+let b = new B()
+b.p // undefined
+```
+因为 p 是 A 实例属性，因此 super.p 取不到，如果 p 属性定义在原型上就可以取到。
+```
+class A {
+}
+A.prototype.p = 2
+class B extends A{
+  constructor(){
+    super()
+    console.log(super.p) // 2
+  }
+}
+let b = new B()
+```
 
