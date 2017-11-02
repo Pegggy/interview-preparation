@@ -277,6 +277,49 @@ document.body.onclick = function(e){
   alert(event.type) // 'click'
 })
 ```
+##  Promise
+### 执行顺序
+```js
+console.log(1)
+function Bet() {
+  console.log(2)
+  return new Promise (function(resolve,reject){
+    console.log(3)
+    setTimeout(function(){
+      console.log(4)
+      let random = Math.random()
+      if(random > 0.5) resolve()
+      else reject()
+    },1000)
+  })
+}
+console.log(5)
+let aPromise = Bet()
+console.log(6)
+aPromise.then(function(){
+  console.log(7)
+  console.log('win')
+},function(){
+  console.log(7)
+  console.log('lose')
+})
+console.log(8)
+// 1 5 2 3 6 8 4 7 win/lose
+```
+Promise 内部函数会马上执行，而 setTimeout 会等到当前代码运行完才去执行。
+
+```js
+let a = new Promise(function(resolve,reject){
+  resolve()
+})
+a.then(function(){
+  console.log(1)
+})
+console.log(2)
+// 2 1
+```
+Promise 的回调会在下一次循环中去执行，即使 Promise 函数立即执行 resolve() ，也会等到当前需要执行的代码运行完毕以后，类似于 setTimeout。
+这是为了保证 Promise 的执行顺序可预测。
 
 ## extends
 Class 可以通过`extends`关键字实现继承
